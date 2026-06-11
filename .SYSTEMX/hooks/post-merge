@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# .SYSTEMX/hooks/post-merge — Refresh the version tracker after merge/pull.
+set -euo pipefail
+ROOT_DIR="$(git rev-parse --show-toplevel)"
+VERSION_JSON="$ROOT_DIR/.SYSTEMX/version/version.json"
+[[ -f "$VERSION_JSON" ]] || exit 0
+
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+PKG_VERSION=$(node -e 'console.log(require("./package.json").version)' 2>/dev/null || echo "0.0.0")
+
+node -e "
+  const fs=require('fs');
+  const v=JSON.parse(fs.readFileSync('$VERSION_JSON','utf8'));
+  v.app=v.app||{};
+  v.app.version='$PKG_VERSION';
+  v.app.branch='$BRANCH';
+  v.app.lastUpdated=new Date().toISOString();
+  fs.writeFileSync('$VERSION_JSON', JSON.stringify(v,null,2)+'\n');
+" 2>/dev/null || true
+echo "[post-merge] Version tracker updated: v$PKG_VERSION on $BRANCH"
