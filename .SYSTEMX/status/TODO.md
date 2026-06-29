@@ -1,22 +1,25 @@
-# TODO — WebApp Stack G One Point Zero
+# TODO — Control-Llama-Command
 
-Backlog for the generic template. Check items off or move to
+Backlog for the product overlay. Check items off or move to
 [IN_PROGRESS.md](IN_PROGRESS.md) → [DONE.md](DONE.md).
 
 ## Next up
 
-- [ ] Add a Vitest + Playwright scaffold to `starter/` (currently playbook-only, Step 10)
-- [ ] Add an optional `functions/` skeleton to `starter/` for projects that want it (Step 06)
-- [ ] Provide a GitHub Actions deploy job example wired to `deploy.sh` (Step 09)
+- [ ] Add Firebase Admin SDK endpoint/script to assign `accountLevel` claims
+- [ ] Persist settings to `userSettings/{uid}` and chat history to `conversations/{id}`
+- [ ] Persist local-agent command audit records to `logs/{id}`
+- [ ] Add Vitest coverage for Ollama services and auth/settings context
+- [ ] Add Playwright smoke tests for dashboard, chat, settings, and login
 
 ## Backlog
 
-- [ ] Linux/WSL auto-install path in `bootstrap.sh` (currently prints guidance)
-- [ ] Optional Sentry wiring in the starter (`VITE_SENTRY_DSN`)
-- [ ] `setup-github-secrets.sh` helper to push repo/Actions secrets (gated)
-- [ ] Preview-channel deploy helper (`firebase hosting:channel:deploy`)
+- [ ] Configure Firebase project, Auth providers, and admin custom claims
+- [ ] Implement cloud-relay command queue for deployed web control
+- [ ] Add function/local-agent ID-token verification
+- [ ] Add Sentry wiring once monitoring is selected
+- [ ] Add preview-channel deploy helper (`firebase hosting:channel:deploy`)
 
 ## Future
 
-- [ ] Generation 1.1: evaluate alternate hosts (Cloud Run / static) as a module
-- [ ] i18n + PWA optional modules in the playbook
+- [ ] Runtime abstraction for LM Studio and llama.cpp
+- [ ] Model import/export and fine-tuning workflow

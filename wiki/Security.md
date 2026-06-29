@@ -1,92 +1,35 @@
 # Security
 
-OWASP Top 10 is the checklist. Every playbook step's `🔒 Security notes` maps back
-to the non-negotiable defaults below.
+## Baseline
 
-## Security baseline (non-negotiable defaults)
+- Firebase Auth protects routes once Firebase config is present.
+- Account access uses Firebase custom claims. Preferred: `accountLevel: 0..5`.
+  Compatibility claims: `plan`, `admin`, `employee`, `owner`, `superAdmin`.
+- Firestore rules deny by default and explicitly allow user-owned settings and
+  conversations.
+- Logs and model control are Level 4+.
+- Account-level changes are Level 5.
+- Model control commands are never executed in browser code.
 
-- **Security headers** on Hosting: CSP, HSTS (preload), `X-Content-Type-Options`,
-  `X-Frame-Options: DENY`, `Referrer-Policy`, `Permissions-Policy`, COOP.
-- **Firestore / Storage rules** are **deny-by-default**; tested with rules unit
-  tests in CI.
-- **RBAC** via custom claims; privileged callables verify claims server-side.
-- **MFA enforcement** option for admin roles.
-- **Secrets never in the repo**; `.env*` and `*secrets*` are git-ignored.
-- **Dependency audit** (`npm audit`) + secret scanning in CI.
-- **App Check** recommended for production to gate Firebase backends.
-- **Stripe webhooks** verify signatures + use idempotency keys.
+## Ollama Host Safety
 
-## Security headers (shipped in `firebase.json`)
+Keep Ollama bound to localhost by default. If the operator exposes Ollama on a
+LAN host, require authenticated HTTPS or a tunnel, verify identities at the local
+agent, and log every command.
 
-The starter's `firebase.json` already applies a hardened header set to every
-response:
+## Command Safety
 
-| Header | Value (summary) |
-| --- | --- |
-| `Content-Security-Policy` | `default-src 'self'`; scripts/styles from self + https; `object-src 'none'`; `base-uri 'self'` |
-| `Strict-Transport-Security` | `max-age=63072000; includeSubDomains; preload` |
-| `X-Content-Type-Options` | `nosniff` |
-| `X-Frame-Options` | `DENY` |
-| `Referrer-Policy` | `strict-origin-when-cross-origin` |
-| `Permissions-Policy` | `geolocation=(), microphone=(), camera=()` |
-| `Cross-Origin-Opener-Policy` | `same-origin-allow-popups` |
+The local agent must:
 
-Static assets under `assets/**` also get `Cache-Control: public, max-age=31536000,
-immutable`.
+- Accept only known actions: start, stop, pull, remove, logs.
+- Verify Firebase bearer tokens and require Level 4+ for model commands.
+- Validate model names against a strict allowlist pattern.
+- Verify Firebase ID tokens and admin claims for dangerous actions.
+- Run commands with bounded timeouts and controlled environment variables.
+- Write stdout/stderr and exit status to admin-only logs.
 
-> When you add Stripe, extend the CSP `script-src`/`frame-src` to include
-> `https://js.stripe.com` (see Step 11).
+## Secrets
 
-## Verifying headers on a live deploy
-
-```bash
-URL="https://<your-project>.web.app"
-curl -sI "$URL" | grep -i strict-transport-security
-curl -sI "$URL" | grep -i content-security-policy
-```
-
-## Handling live keys during setup (AI-assisted)
-
-If you drive the **🚀 Start Template into Production** wizard (or any setup) with
-an AI assistant, you will paste **live keys and secrets** into the session. The
-wizard ends with an explicit reminder — follow it:
-
-- **Delete the AI chat / conversation** you used to run the setup.
-- Secrets are written to `.env.local` and `.secrets.env` (the latter `chmod 600`),
-  both **git-ignored** by default — never commit them.
-- Never paste **server secrets** (Stripe secret key, webhook secret) back into a
-  chat.
-- If a secret may have been exposed, **rotate it** in the provider console.
-- Store production secrets in **Firebase Functions secrets** / **GCP Secret
-  Manager**, not in flat files on shared machines.
-
-## The two-tier secret model
-
-| Tier | Examples | Where it lives |
-| --- | --- | --- |
-| **Client (public)** | `VITE_FIREBASE_*`, `VITE_STRIPE_PUBLISHABLE_KEY` | Bundle / `.env.local` |
-| **Server (secret)** | `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `EMAIL_API_KEY` | Functions secrets / GH Actions / GCP Secret Manager |
-
-A Firebase web API key is **not** a secret — see
-**[Environment Variables](Environment-Variables)**.
-
-## Firestore / Storage rules
-
-- Start **deny-by-default**; open up reads/writes per collection deliberately.
-- Keep a **rules unit test** in the suite to catch data-exposure regressions
-  (`@firebase/rules-unit-testing`).
-- Deploy rules alongside hosting so they never drift:
-  `firebase deploy --only firestore:rules,storage:rules`.
-
-## Production hardening checklist
-
-- [ ] HSTS + CSP present on the live response (curl checks above).
-- [ ] Deployed rules match the repo (no drift).
-- [ ] **App Check** enforcement enabled for production backends.
-- [ ] Stripe in **live** mode only after a passing test-mode smoke.
-- [ ] No `.env*` / secret files bundled into `dist/`.
-- [ ] `npm audit` + secret scanning green in CI.
-- [ ] MFA required for admin roles.
-
-See [Step 07 — Security Rules](Setup-Playbook) and [Step 11 — Build & Deploy](Deployment)
-for the detailed gates.
+Never commit server secrets, service account JSON, API tokens, or local machine
+credentials. Use `.secrets.env`, Firebase Functions secrets, GitHub Actions
+secrets, or GCP Secret Manager.

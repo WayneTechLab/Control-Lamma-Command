@@ -1,6 +1,25 @@
-# DONE — WebApp Stack G One Point Zero
+# DONE — Control-Llama-Command
 
-Completed work on the generic template system. Newest first.
+Completed work. Newest first.
+
+## 2026-06-11
+
+- ✅ Synced local checkout to `WayneTechLab/Control-Lamma-Command`.
+- ✅ Ingested the Control-Llama-Command build spec locally as `PROMPT-INGEST.md`.
+- ✅ Added product master plan at `.SYSTEMX/PROJECT-MASTER-PLAN.md`.
+- ✅ Converted the starter shell into a dashboard/chat/settings/logs/auth app.
+- ✅ Added typed Ollama client, Firebase-aware auth state, runtime settings, and
+  sample-data fallback.
+- ✅ Updated Firestore rules for `userSettings`, `conversations`, and admin-only
+  `logs`.
+- ✅ Restored Step 04 environment/secrets guide and added a server secrets
+  template.
+- ✅ Added six-level account model, public home route, login → dashboard flow,
+  admin users shell, and local/cloud control API contract.
+- ✅ Added MOLC-AI branding, local machine diagnostics/control page, safe agent
+  command runner, chat memory save/export, and browser tools shell.
+- ✅ Added macOS local packaging for MOLC-AI: local web runtime, native Swift
+  menu bar app, installer command, runtime scripts, and optional start-at-login.
 
 ## 2026-06-08
 

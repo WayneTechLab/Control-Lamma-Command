@@ -2,23 +2,66 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     function isSignedIn() { return request.auth != null; }
-    function isAdmin() { return isSignedIn() && request.auth.token.admin == true; }
     function isOwner(uid) { return isSignedIn() && request.auth.uid == uid; }
+    function hasLevel(level) {
+      return isSignedIn()
+        && request.auth.token.accountLevel is int
+        && request.auth.token.accountLevel >= level;
+    }
+    function isEmployeeAdmin() {
+      return hasLevel(4)
+        || (isSignedIn() && request.auth.token.admin == true)
+        || (isSignedIn() && request.auth.token.employee == true)
+        || isSystemOwner();
+    }
+    function isSystemOwner() {
+      return hasLevel(5)
+        || (isSignedIn() && request.auth.token.owner == true)
+        || (isSignedIn() && request.auth.token.superAdmin == true);
+    }
 
     // Deny everything by default.
     match /{document=**} {
       allow read, write: if false;
     }
 
-    // Per-user documents.
+    // Per-user profile documents.
     match /users/{uid} {
-      allow read, write: if isOwner(uid) || isAdmin();
+      allow read: if isOwner(uid) || isEmployeeAdmin();
+      allow create: if isOwner(uid) || isEmployeeAdmin();
+      allow update: if isOwner(uid) || isSystemOwner();
+      allow delete: if isSystemOwner();
     }
 
-    // Public, read-only content (e.g. marketing/site data).
+    // Runtime preferences for model defaults, generation options, and UI state.
+    match /userSettings/{uid} {
+      allow read, write: if isOwner(uid) || isEmployeeAdmin();
+    }
+
+    // Conversation documents are owned by a single authenticated user.
+    match /conversations/{conversationId} {
+      allow create: if isSignedIn()
+        && request.resource.data.ownerUid == request.auth.uid;
+      allow read, update, delete: if isSignedIn()
+        && resource.data.ownerUid == request.auth.uid;
+      allow read, write: if isEmployeeAdmin();
+    }
+
+    // Command and runtime logs are admin-only because they can expose host details.
+    match /logs/{logId} {
+      allow read, write: if isEmployeeAdmin();
+    }
+
+    // Owner-only account-level assignment requests/audit.
+    match /accountLevelChanges/{changeId} {
+      allow read: if isEmployeeAdmin();
+      allow create, update, delete: if isSystemOwner();
+    }
+
+    // Public, read-only content for controlled documentation.
     match /public/{doc} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow write: if isEmployeeAdmin();
     }
   }
 }

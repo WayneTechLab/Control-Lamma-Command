@@ -1,12 +1,11 @@
 # Wiki source
 
 These Markdown files are the source for the
-[**GitHub Wiki**](https://github.com/WayneTechLab/webapp-stack-g1/wiki).
+[**GitHub Wiki**](https://github.com/WayneTechLab/Control-Lamma-Command/wiki).
 
-GitHub wikis are backed by a **separate git repository**
-(`WayneTechLab/webapp-stack-g1.wiki.git`). Keeping the pages here, in the main
-repo, lets us version and review them alongside the code; they are then published
-to the wiki repo.
+GitHub wikis are backed by a separate git repository
+(`WayneTechLab/Control-Lamma-Command.wiki.git`). Keeping the pages here lets us
+version and review them alongside the code before publishing.
 
 ## Pages
 
@@ -18,7 +17,7 @@ to the wiki repo.
 | `Project-Structure.md` | Project Structure |
 | `Environment-Variables.md` | Environment Variables |
 | `Security.md` | Security |
-| `Setup-Playbook.md` | Setup Playbook (00–12) |
+| `Setup-Playbook.md` | Setup Playbook (00-12) |
 | `Deployment.md` | Deployment |
 | `Testing-and-QA.md` | Testing & QA |
 | `FAQ.md` | FAQ |
@@ -27,18 +26,14 @@ to the wiki repo.
 
 ## Publishing to the GitHub Wiki
 
-> The wiki must be enabled once: repo **Settings → Features → Wikis**, then create
-> the first page in the UI so the `.wiki.git` repo exists.
+> Enable the wiki once in repo Settings, then create the first page in the UI so
+> the `.wiki.git` repo exists.
 
 ```bash
-# From the repo root:
-git clone https://github.com/WayneTechLab/webapp-stack-g1.wiki.git /tmp/wsg1-wiki
-cp wiki/*.md /tmp/wsg1-wiki/
-cd /tmp/wsg1-wiki
+git clone https://github.com/WayneTechLab/Control-Lamma-Command.wiki.git /tmp/clc-wiki
+cp wiki/*.md /tmp/clc-wiki/
+cd /tmp/clc-wiki
 git add -A
 git commit -m "docs: sync wiki from main repo"
 git push
 ```
-
-After the first publish, re-run the `cp` + commit + push whenever these files
-change.

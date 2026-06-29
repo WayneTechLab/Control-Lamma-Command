@@ -1,56 +1,35 @@
-# WebApp Stack G One Point Zero — Wiki
+# Control-Llama-Command — Wiki
 
-Welcome to the **WebApp Stack G One Point Zero** wiki — the deep-dive home for the
-reusable, enterprise-grade blueprint for spinning up **TypeScript + React + Vite +
-Firebase + Stripe** web apps the same way, every time.
+Control-Llama-Command is a secure macOS dashboard for local Ollama model
+operations, built on the WayneTechLab `webapp-stack-g1` foundation.
 
-> The repository is **two things at once**: a runnable starter app (the repo root)
-> and a full, ordered setup playbook (`.SYSTEMX/Template/`). This wiki documents
-> both.
+The app provides an authenticated command surface for installed models, running
+models, chat streaming, settings, and operational logs. `.SYSTEMX/` keeps the
+ordered setup, quality, and deploy workflows.
 
 ## Start here
 
 | If you want to… | Go to |
 | --- | --- |
-| Get a running app in minutes | **[Quick Start](Quick-Start)** |
-| Understand the tech choices | **[Architecture & Stack](Architecture-and-Stack)** |
-| Know where everything lives | **[Project Structure](Project-Structure)** |
-| Wire up Firebase / config | **[Environment Variables](Environment-Variables)** |
-| Ship safely | **[Security](Security)** |
-| Do the full guided build | **[Setup Playbook](Setup-Playbook)** |
-| Go live | **[Deployment](Deployment)** |
-| Add tests | **[Testing & QA](Testing-and-QA)** |
+| Run the app locally | **[Quick Start](Quick-Start)** |
+| Understand the stack | **[Architecture & Stack](Architecture-and-Stack)** |
+| See the repo layout | **[Project Structure](Project-Structure)** |
+| Configure Firebase/Ollama | **[Environment Variables](Environment-Variables)** |
+| Review access controls | **[Security](Security)** |
+| Follow the setup gates | **[Setup Playbook](Setup-Playbook)** |
+| Ship with Firebase | **[Deployment](Deployment)** |
+| Add coverage | **[Testing & QA](Testing-and-QA)** |
 | Common questions | **[FAQ](FAQ)** |
 
-## What is this?
+## Product overlay
 
-A **portable golden path**. Drop it into any new repository (or click *Use this
-template*) and an engineer — or an AI agent — follows the steps in order to stand
-up a production-ready web application from a bare machine to a deployed,
-monitored, billing-enabled product.
+The source build spec is ingested locally as `PROMPT-INGEST.md`. The tracked
+source of truth is `.SYSTEMX/PROJECT-MASTER-PLAN.md`.
 
-It is intentionally **generic**: no business names, no hard-coded project IDs, no
-customer data. Everything project-specific is collected during the **Interview**
-step (Step 01) and injected into generated files.
+## First implementation slice
 
-## Two ways to use it
-
-1. **⚡ Fast start** — the repo root is a runnable app. `npm install && npm run dev`
-   and you have a working React + Firebase site (it boots even before Firebase is
-   configured).
-2. **🧭 Full playbook** — [`.SYSTEMX/Template/`](https://github.com/WayneTechLab/webapp-stack-g1/tree/main/.SYSTEMX/Template)
-   contains an ordered, gated system (`steps/00` → `steps/12`) covering
-   provisioning, Stripe, Cloud Functions, security rules, CI/CD, testing, and
-   monitoring.
-
-## The golden rule
-
-> **One step at a time, in order.** Each step states its goal and preconditions,
-> prompts for inputs, performs the work, and ends with a **verification gate** you
-> must pass before advancing. Later steps depend on artifacts (env vars, project
-> IDs, price IDs) produced earlier.
-
-## Versioning
-
-`G One Point Zero` = **Generation 1.0**. Bump the generation for a breaking change
-to the step order or baseline stack; patch individual step files freely.
+- Dashboard and running-model views.
+- Chat streaming against Ollama's generation API.
+- Settings for local runtime URLs and generation defaults.
+- Firebase-aware login and route protection.
+- Admin-only model control boundary through a local agent URL.

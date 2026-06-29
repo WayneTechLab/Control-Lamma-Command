@@ -13,6 +13,18 @@
 
 ---
 
+## Project overlay — Control-Llama-Command
+
+This repository has been specialized from the generic stack into
+**Control-Llama-Command**, a secure macOS dashboard for local Ollama model
+operations. The product-specific source of truth is
+[`../PROJECT-MASTER-PLAN.md`](../PROJECT-MASTER-PLAN.md), while this file remains
+the reusable stack and delivery playbook.
+
+For this project, skip Stripe unless a future billing requirement is introduced.
+Prioritize Firebase Auth, Firestore rules, local-agent command safety, Ollama API
+integration, chat streaming, settings persistence, logs, and QA gates.
+
 ## 1. Purpose
 
 Build the **same class of web application repeatably**: a marketing + product

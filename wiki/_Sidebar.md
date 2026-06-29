@@ -1,4 +1,4 @@
-### 📘 WebApp Stack G1
+### Control-Llama-Command
 
 **Getting started**
 - [Home](Home)
@@ -19,4 +19,4 @@
 - [FAQ](FAQ)
 
 ---
-[Repository ↗](https://github.com/WayneTechLab/webapp-stack-g1)
+[Repository](https://github.com/WayneTechLab/Control-Lamma-Command)

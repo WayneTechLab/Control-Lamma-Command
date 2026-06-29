@@ -1,11 +1,13 @@
-# .SYSTEMX — WebApp Stack G One Point Zero operational system
+# .SYSTEMX — Control-Llama-Command operational system
 
-This directory is the **operational control layer** for the template: the launcher
-menu, the setup/deploy/quality scripts, git hooks, version tracking, and the full
-guided playbook.
+This directory is the **operational control layer** for Control-Llama-Command:
+the launcher menu, setup/deploy/quality scripts, git hooks, version tracking,
+the full `webapp-stack-g1` guided playbook, and the project-specific master plan.
 
 > The runnable app lives at the **repo root**. `.SYSTEMX/` is the tooling that
 > sets it up, deploys it, and keeps it healthy.
+
+Project overlay: [PROJECT-MASTER-PLAN.md](PROJECT-MASTER-PLAN.md).
 
 ## Layout
 

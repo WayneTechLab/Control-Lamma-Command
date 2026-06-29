@@ -1,1 +1,1 @@
-**WebApp Stack G One Point Zero** · TS + React + Vite + Firebase + Stripe · [Repo](https://github.com/WayneTechLab/webapp-stack-g1) · [Master Playbook](https://github.com/WayneTechLab/webapp-stack-g1/blob/main/.SYSTEMX/Template/WEBAPP-STACK-G1.0.md)
+**Control-Llama-Command** · TS + React + Vite + Firebase + Ollama · [Repo](https://github.com/WayneTechLab/Control-Lamma-Command) · [Master Plan](https://github.com/WayneTechLab/Control-Lamma-Command/blob/main/.SYSTEMX/PROJECT-MASTER-PLAN.md)

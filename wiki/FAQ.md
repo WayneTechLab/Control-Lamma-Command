@@ -1,73 +1,26 @@
 # FAQ
 
-## Is this a starter app or a setup system?
+## Why does the dashboard show sample models?
 
-**Both.** The repo root is a runnable React + Firebase app (Step 02 of the
-playbook). The `.SYSTEMX/Template/` directory is the full ordered system that
-takes you all the way to production. Use the fast start when you just want a
-running app; use the playbook when you need provisioning, Stripe, Functions, CI,
-and monitoring.
+The browser could not reach Ollama at `VITE_OLLAMA_API_BASE_URL`. Start Ollama or
+adjust the URL in Settings.
 
-## Why does the app run before I add Firebase config?
+## Why are command buttons disabled?
 
-`src/config/firebase.ts` only calls `initializeApp` when an API key + project ID
-are present. Until then, `auth`, `db`, and `storage` are `null` and the app boots
-normally (with a dev-only console warning). This lets you develop UI before
-provisioning Firebase. See **[Environment Variables](Environment-Variables)**.
+Pull, remove, start, stop, and logs need a same-machine local agent. Set
+`VITE_LOCAL_AGENT_BASE_URL` after that agent exists.
 
-## Is the Firebase API key a secret? Should I hide it?
+## Is the Firebase web API key secret?
 
-No. A Firebase web API key **identifies** your project; it does not grant
-privileged access. It's protected by **Security Rules + App Check**, not by
-secrecy. It's expected to ship in the client bundle. Real secrets (Stripe secret
-key, webhook secret, email API keys) belong on the server. See **[Security](Security)**.
+No. It is public client config. Security comes from Auth, rules, App Check, and
+server-side checks.
 
-## How do I start a new project from this?
+## Can this run purely from Firebase Cloud Functions?
 
-```bash
-gh repo create my-app --template WayneTechLab/webapp-stack-g1 --private --clone
-```
+Only if Functions can safely reach the machine running Ollama. For local macOS
+control, a local agent or Functions emulator is the safer default.
 
-…or click **“Use this template”** on the repo page. See **[Quick Start](Quick-Start)**.
+## How do admins work?
 
-## How do I deploy?
-
-```bash
-npm run build
-firebase use --add
-firebase deploy --only hosting,firestore:rules,storage:rules
-```
-
-Full details in **[Deployment](Deployment)**.
-
-## Do I have to use Stripe / Cloud Functions / Sentry?
-
-No — those are **optional modules** toggled during the Interview (Step 01). The
-baseline app has none of them; enable only what your project needs.
-
-## Can an AI agent run the playbook?
-
-Yes — that's a first-class mode. Feed the agent
-`.SYSTEMX/Template/WEBAPP-STACK-G1.0.md`, then the `steps/` files one at a time.
-Each step has an explicit **verification gate** so the agent (or human) knows when
-it's safe to advance. See **[Setup Playbook](Setup-Playbook)**.
-
-## What Node version do I need?
-
-Node **≥ 20**, with **22 recommended** (Cloud Functions runtime targets Node 22).
-
-## How do I change the routes/pages?
-
-Add a page component under `src/pages/`, then register it in `src/router.tsx`. All
-routes render inside the shared `Layout` (Navbar + Footer). See
-**[Project Structure](Project-Structure)**.
-
-## What does "G One Point Zero" mean?
-
-**Generation 1.0.** Bump the generation for a breaking change to the step order or
-baseline stack (e.g. swapping the build tool); patch individual step files freely.
-
-## Where's the canonical reference?
-
-[`.SYSTEMX/Template/WEBAPP-STACK-G1.0.md`](https://github.com/WayneTechLab/webapp-stack-g1/blob/main/.SYSTEMX/Template/WEBAPP-STACK-G1.0.md)
-is the master playbook. This wiki summarizes and links into it.
+Set a Firebase custom claim with `admin: true`. Non-admin signed-in users are
+viewers.
