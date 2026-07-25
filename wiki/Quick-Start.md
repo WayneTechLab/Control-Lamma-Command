@@ -10,6 +10,17 @@ npm run agent
 
 Open the Vite URL printed by the dev server.
 
+For the native macOS install, use:
+
+```bash
+npm run install:mac
+npm run install:mac:login
+```
+
+That installs the menu bar app, starts the local web runtime on
+`http://127.0.0.1:4173`, and starts the local agent on
+`http://127.0.0.1:8787`.
+
 ## Start Ollama
 
 ```bash

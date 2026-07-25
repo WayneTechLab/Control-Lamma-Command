@@ -15,6 +15,7 @@
 ├── firebase.json          # Hosting, rules, emulators, security headers
 ├── .env.example           # Public client env contract
 ├── .SYSTEMX/              # operational scripts, playbook, project master plan
+├── local-runtime/         # macOS installer, menu bar app, and runtime scripts
 └── wiki/                  # GitHub wiki source
 ```
 

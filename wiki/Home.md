@@ -1,7 +1,8 @@
 # Control-Llama-Command — Wiki
 
 Control-Llama-Command is a secure macOS dashboard for local Ollama model
-operations, built on the WayneTechLab `webapp-stack-g1` foundation.
+operations, built on the WayneTechLab `webapp-stack-g1` foundation and now
+packaged as MOLC-AI for local macOS install with a menu bar controller.
 
 The app provides an authenticated command surface for installed models, running
 models, chat streaming, settings, and operational logs. `.SYSTEMX/` keeps the
@@ -33,3 +34,5 @@ source of truth is `.SYSTEMX/PROJECT-MASTER-PLAN.md`.
 - Settings for local runtime URLs and generation defaults.
 - Firebase-aware login and route protection.
 - Admin-only model control boundary through a local agent URL.
+- Native macOS install path with `npm run install:mac` and optional login item
+  registration via `npm run install:mac:login`.

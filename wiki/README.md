@@ -24,6 +24,12 @@ version and review them alongside the code before publishing.
 | `_Sidebar.md` | Right-hand navigation |
 | `_Footer.md` | Page footer |
 
+## Product overlay
+
+The source build spec is ingested locally as `PROMPT-INGEST.md`. The tracked
+source of truth is `.SYSTEMX/PROJECT-MASTER-PLAN.md`, with the macOS install
+contract in `.SYSTEMX/MACOS-LOCAL-INSTALL.md`.
+
 ## Publishing to the GitHub Wiki
 
 > Enable the wiki once in repo Settings, then create the first page in the UI so
